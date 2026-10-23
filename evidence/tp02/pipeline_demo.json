@@ -1,0 +1,32 @@
+{
+  "features": [
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges",
+    "Contract",
+    "InternetService",
+    "PaymentMethod"
+  ],
+  "seed": 42,
+  "test_evaluated": false,
+  "same_customer_allocations_as_milestone_1": true,
+  "validation_accuracy": 0.8041163946061036,
+  "confusion_matrix": [
+    [
+      935,
+      100
+    ],
+    [
+      176,
+      198
+    ]
+  ],
+  "matrix_definition": "Rows actual, columns predicted; labels [0=No, 1=Yes]",
+  "training_medians": {
+    "tenure": 29.0,
+    "MonthlyCharges": 70.55,
+    "TotalCharges": 1373.625
+  },
+  "imputer_matches_training_medians": true,
+  "prediction_preserves_imputer_statistics": true
+}

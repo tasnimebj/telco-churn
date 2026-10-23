@@ -1,0 +1,14 @@
+{
+  "customer_allocations_match_milestone_1_and_are_disjoint": true,
+  "imputer_matches_training_medians": true,
+  "scaler_mean_matches_imputed_training_data": true,
+  "prediction_preserves_imputer_and_scaler_statistics": true,
+  "missing_TotalCharges_and_unseen_Contract_accepted": true,
+  "missing_required_feature_error": "Missing required features: ['tenure']",
+  "malformed_nonblank_numeric_text_rejected": true,
+  "fresh_process_probability_agreement_atol": 1e-12,
+  "fresh_process_class_predictions_match": true,
+  "inference_requires_training_labels_or_fit": false,
+  "test_evaluated": false,
+  "artifact_sha256": "2c478fbbf42a6a2d0ea1a67dab25167506ddd3db149b3466ea65fcbfbef9d7c6"
+}

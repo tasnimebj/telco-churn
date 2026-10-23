@@ -1,0 +1,11 @@
+{
+  "selection_metric": "average_precision",
+  "selection_reason": "Rank positive churn cases across thresholds in an imbalanced classification task.",
+  "tie_policy": "Exact ties use the listed learned-model order: logistic, decision_tree, random_forest.",
+  "threshold": 0.5,
+  "models": {
+    "logistic": {"max_iter": 1000, "random_state": 42},
+    "decision_tree": {"max_depth": 5, "min_samples_leaf": 20, "random_state": 42},
+    "random_forest": {"n_estimators": 100, "max_depth": 8, "min_samples_leaf": 5, "random_state": 42, "n_jobs": 1}
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "tenure":2,
+    "MonthlyCharges":24.3,
+    "TotalCharges":"38.45",
+    "Contract":"Month-to-month",
+    "InternetService":"DSL",
+    "PaymentMethod":"Mailed check"
+  },
+  {
+    "tenure":70,
+    "MonthlyCharges":106.05,
+    "TotalCharges":"7554.05",
+    "Contract":"Month-to-month",
+    "InternetService":"Fiber optic",
+    "PaymentMethod":"Electronic check"
+  },
+  {
+    "tenure":7,
+    "MonthlyCharges":69.45,
+    "TotalCharges":"477.05",
+    "Contract":"One year",
+    "InternetService":"DSL",
+    "PaymentMethod":"Electronic check"
+  },
+  {
+    "tenure":9,
+    "MonthlyCharges":75.85,
+    "TotalCharges":"724.65",
+    "Contract":"Month-to-month",
+    "InternetService":"Fiber optic",
+    "PaymentMethod":"Electronic check"
+  },
+  {
+    "tenure":26,
+    "MonthlyCharges":85.9,
+    "TotalCharges":"2196.45",
+    "Contract":"Month-to-month",
+    "InternetService":"Fiber optic",
+    "PaymentMethod":"Credit card (automatic)"
+  }
+]
