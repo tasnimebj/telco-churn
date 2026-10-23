@@ -1,5 +1,29 @@
 # Telco Churn — TP01
 
+## TP02: training and reusable prediction
+
+From the project root, after supplying the unchanged CSV and running `python -m uv sync --locked`:
+
+```powershell
+python -m uv run --locked python -m telco_churn.first_model
+python -m uv run --locked python -m telco_churn.pipeline_demo
+python -m uv run --locked python -m telco_churn.training
+```
+
+The first command records the fixed stratified 60/20/20 customer allocation and a two-feature baseline. Later commands verify that allocation. Configuration is in `configs/train.json`; input types and preprocessing policies are in [the TP02 input policy](references/tp02_pipeline.md). Churn Yes is positive. The three learned classifiers use the same six features, fresh preprocessing, training-only fitting and validation metrics. Selection maximizes validation average precision; threshold metrics use probability >= 0.5. The test set remains reserved.
+
+Training saves the selected fitted preprocessor and classifier together to `models/selected_pipeline.joblib`, alongside `models/metadata.json`. It also runs a separate inference process and verifies probability agreement with absolute tolerance 1e-12 and exact class agreement. Checks cover disjoint allocations, training-only imputation/scaling statistics, unchanged statistics after prediction, permitted missingness and unknown categories, and visible failures for missing features and malformed numeric text. Results, fit durations, selected-model rationale, metadata and checks are tracked under `evidence/tp02/`.
+
+To predict without training execution or labels, after generating or obtaining the trusted artifact and metadata:
+
+```powershell
+python -m uv run --locked python -m telco_churn.prediction --input evidence/tp02/inference_batch.json --output reports/predictions.json
+```
+
+Input JSON contains a list of records with the six required unencoded features, without Churn. Only load trusted joblib artifacts, using matching dependency versions from `uv.lock`. The `models/` directory is deliberately excluded from Git: recreate it with the training command, or include both the artifact and metadata in the course's artifact submission location. The tracked metadata contains the artifact hash, source hash, exact customer allocations, configuration, metrics, library versions and code/dependency-file hashes.
+
+Independent TP02 peer execution and feedback remain pending. Local automated checks do not constitute peer review. No claim of generalization on the reserved test set or probability calibration is made.
+
 The business question is whether a telecom customer will churn. TP01 establishes a reproducible data inspection workflow; it does not train a model or infer the effects of retention actions from this customer snapshot.
 
 ## Setup and execution
