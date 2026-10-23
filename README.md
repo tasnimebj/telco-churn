@@ -1,4 +1,15 @@
-# Telco Churn — TP01
+# Telco Churn — TP01 and TP02
+
+## Quick check from GitHub without the training CSV
+
+The selected TP02 artifact and its metadata are included in Git. Clone the repository, enter its root, and run:
+
+```powershell
+python -m uv sync --locked
+python -m uv run --locked python -m telco_churn.prediction --input evidence/tp02/inference_batch.json --output reports/predictions.json
+```
+
+This path needs neither the original dataset nor training labels and does not retrain. The JSON result contains churn probabilities and classes at threshold 0.5. Artifact/metadata hash mismatch produces an explicit failure. Only load trusted artifacts. Full retraining still requires the exact original CSV as described below.
 
 ## TP02: training and reusable prediction
 
@@ -20,9 +31,9 @@ To predict without training execution or labels, after generating or obtaining t
 python -m uv run --locked python -m telco_churn.prediction --input evidence/tp02/inference_batch.json --output reports/predictions.json
 ```
 
-Input JSON contains a list of records with the six required unencoded features, without Churn. Only load trusted joblib artifacts, using matching dependency versions from `uv.lock`. The `models/` directory is deliberately excluded from Git: recreate it with the training command, or include both the artifact and metadata in the course's artifact submission location. The tracked metadata contains the artifact hash, source hash, exact customer allocations, configuration, metrics, library versions and code/dependency-file hashes.
+Input JSON contains a list of records with the six required unencoded features, without Churn. Only load trusted joblib artifacts, using matching dependency versions from `uv.lock`. Only `models/selected_pipeline.joblib` and `models/metadata.json` are deliberately included in Git for this submission; other model outputs remain ignored. The tracked metadata contains the artifact hash, source hash, exact customer allocations, configuration, metrics, library versions and code/dependency-file hashes.
 
-Independent TP02 peer execution and feedback remain pending. Local automated checks do not constitute peer review. No claim of generalization on the reserved test set or probability calibration is made.
+An AI-assisted review and isolated reproduction are documented in `evidence/tp02/ai_review.md`. They are labelled separately from independent human peer review, which has not occurred. No claim of generalization on the reserved test set or probability calibration is made.
 
 The business question is whether a telecom customer will churn. TP01 establishes a reproducible data inspection workflow; it does not train a model or infer the effects of retention actions from this customer snapshot.
 
@@ -65,7 +76,7 @@ This project was created manually with `uv init --package --python 3.12 telco-ch
 | `uv.lock` | Resolved dependency versions, tracked in Git |
 | `.venv/` | Local installed environment, excluded from Git |
 
-Future TP02 work will put preprocessing and training code in the package, settings in `configs/`, and saved fitted pipelines in `models/`. Notebooks can hold exploration, while reusable terminal workflows belong in package code. These future locations do not need empty placeholder files today.
+TP02 preprocessing and training code is in the package, settings are in `configs/`, and fitted pipelines are in `models/`. Notebooks can hold exploration, while reusable terminal workflows belong in package code.
 
 ## Inspection results and recreation
 

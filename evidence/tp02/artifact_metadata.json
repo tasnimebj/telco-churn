@@ -7105,7 +7105,7 @@
         "random_state": null,
         "strategy": "most_frequent"
       },
-      "fit_seconds": 0.010118800000782358,
+      "fit_seconds": 0.010405099999843515,
       "average_precision": 0.2654364797728886,
       "precision": 0.0,
       "recall": 0.0,
@@ -7140,7 +7140,7 @@
         "verbose": 0,
         "warm_start": false
       },
-      "fit_seconds": 0.025045799999134033,
+      "fit_seconds": 0.028048300000591553,
       "average_precision": 0.6474664703085159,
       "precision": 0.6644295302013423,
       "recall": 0.5294117647058824,
@@ -7174,7 +7174,7 @@
         "random_state": 42,
         "splitter": "best"
       },
-      "fit_seconds": 0.012606599999344326,
+      "fit_seconds": 0.01249430000098073,
       "average_precision": 0.6173000162034762,
       "precision": 0.635593220338983,
       "recall": 0.6016042780748663,
@@ -7214,7 +7214,7 @@
         "verbose": 0,
         "warm_start": false
       },
-      "fit_seconds": 0.22765120000076422,
+      "fit_seconds": 0.20239819999915198,
       "average_precision": 0.6690920439341679,
       "precision": 0.6738351254480287,
       "recall": 0.5026737967914439,
@@ -7250,7 +7250,7 @@
     "src/telco_churn/first_model.py": "20ad67ce5ec362a23b168906090170dc2ce3bd5754d62a152000f300f2505c32",
     "src/telco_churn/pipeline.py": "e89f5d33ae968009b2d9f682f6bf9b33e4fde98514b62b33710b1c4dc332df2a",
     "src/telco_churn/pipeline_demo.py": "620455bc3d85fc572f3abd4e6524f27a409008f1afd4c3b05d0917b19a558814",
-    "src/telco_churn/prediction.py": "e83088e601bc16141dcec68643cf30c68add41190bbd645c3b473a778c0a2506",
+    "src/telco_churn/prediction.py": "42bad474c0ec00545198e3e76b326d3b0bc13e9cf2e8596069fd13c4b09879ad",
     "src/telco_churn/training.py": "5bed2ba43f6b3df3bf34e65f2ea87d64e7fad41e71ac6fb4cd937314eb5ec727",
     "src/telco_churn/__init__.py": "e929d7d5f2d4428164560127189eb72e616f1062f8187ac763edda0d5c7d10c8",
     "configs/train.json": "9f53459e7aef69bab68f4d0e5c56616fef37d725c6890aa6fec3160e20c6b92d",

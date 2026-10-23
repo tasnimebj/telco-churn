@@ -1,6 +1,7 @@
 """Inference only: load a trusted artifact and predict without training data."""
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -18,6 +19,8 @@ def main():
     parser.add_argument("--metadata", type=Path, default=Path("models/metadata.json"))
     args = parser.parse_args()
     metadata = json.loads(args.metadata.read_text(encoding="utf-8"))
+    if hashlib.sha256(args.model.read_bytes()).hexdigest() != metadata["artifact_sha256"]:
+        raise ValueError("Model hash does not match metadata; use the matching artifact pair.")
     # Only load artifacts whose source you trust; joblib is pickle based.
     pipeline = joblib.load(args.model)
     records = pd.DataFrame(json.loads(args.input.read_text(encoding="utf-8")))

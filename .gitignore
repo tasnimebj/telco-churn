@@ -12,7 +12,10 @@ wheels/
 # Original data and generated outputs stay local.
 data/
 reports/
-models/
+# Keep only the selected TP02 submission artifact and its metadata.
+models/*
+!models/selected_pipeline.joblib
+!models/metadata.json
 
 # Local credentials
 .env
