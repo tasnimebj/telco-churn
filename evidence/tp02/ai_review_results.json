@@ -1,0 +1,27 @@
+{
+  "review_type": "AI-assisted review, not independent human peer review",
+  "isolated_environment_created_from_lock": true,
+  "inference_before_supplying_raw_csv_passed": true,
+  "isolated_package_import_verified": true,
+  "complete_training_workflow_passed": true,
+  "customer_allocations_match": true,
+  "validation_metrics_match_atol": 1e-12,
+  "confusion_matrices_match": true,
+  "selected_model": "random_forest",
+  "test_evaluated": false,
+  "artifact_metadata_mismatch_rejected": true,
+  "fresh_process_reload_checks": {
+    "customer_allocations_match_milestone_1_and_are_disjoint": true,
+    "imputer_matches_training_medians": true,
+    "scaler_mean_matches_imputed_training_data": true,
+    "prediction_preserves_imputer_and_scaler_statistics": true,
+    "missing_TotalCharges_and_unseen_Contract_accepted": true,
+    "missing_required_feature_error": "Missing required features: ['tenure']",
+    "malformed_nonblank_numeric_text_rejected": true,
+    "fresh_process_probability_agreement_atol": 1e-12,
+    "fresh_process_class_predictions_match": true,
+    "inference_requires_training_labels_or_fit": false,
+    "test_evaluated": false,
+    "artifact_sha256": "2c478fbbf42a6a2d0ea1a67dab25167506ddd3db149b3466ea65fcbfbef9d7c6"
+  }
+}
