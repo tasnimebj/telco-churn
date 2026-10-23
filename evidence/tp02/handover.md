@@ -19,7 +19,7 @@ The TP01 CSV has an outer CSV quoting layer, so direct pandas loading would expo
 - Independent reviewer: pending; the author is working alone.
 - Peer training or trusted-artifact inference attempt: pending.
 - Peer issue, author response and successful retry: pending.
-- TP02 pull request URL: to be recorded after creation.
+- TP02 pull request URL: https://github.com/tasnimebj/telco-churn/pull/3 (provided by the author).
 - Artifact delivery: `models/selected_pipeline.joblib` and `models/metadata.json` must be included in a separate submission archive or regenerated using the documented training workflow; they are excluded from Git.
 
 Self-validation and automated checks are not represented as independent review. Confirm an acceptable alternative with the instructor if peer execution cannot be arranged.
