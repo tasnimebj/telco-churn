@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv*/
+
+# Original data and generated outputs stay local.
+data/
+reports/
+models/
+
+# Local credentials
+.env
+.env.*
+.aws/
+
+# Evidence under evidence/tp01/ is deliberately tracked.
