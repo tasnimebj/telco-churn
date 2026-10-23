@@ -3,7 +3,7 @@
 - Local input: `data/raw/datasets.csv`.
 - Original workspace copy: `../dataset/datasets.csv`, relative to the project root.
 - SHA-256: `62ca518b1ebbcd4c832c18c1a21629b03abe9033fef66fe2e38d8d030658a20c`.
-- Acquisition provenance: confirmation of the original provider/download remains pending.
+- Acquisition provenance: the project author supplied the existing local file `../dataset/datasets.csv`, which was copied unchanged into this project. Its original provider or download URL has not been confirmed; no claim is made that this file was downloaded directly from IBM.
 - To reproduce this run, obtain the exact supplied `datasets.csv` from the project author through the agreed course sharing channel, place it at the local input path and verify the hash. The CSV is intentionally excluded from Git.
 
 The assignment identifies the dataset family as IBM Telco Customer Churn and lists https://github.com/IBM/telco-customer-churn-on-icp4d as background. This local file wraps each comma-separated record in an outer quoted CSV field. We have not established byte identity with the upstream CSV. Do not substitute a download and assume it has this hash or encoding structure.
