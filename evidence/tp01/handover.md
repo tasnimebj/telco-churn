@@ -5,7 +5,8 @@
 - Repository: https://github.com/tasnimebj/telco-churn
 - Working arrangement: individual work.
 - Independent reviewer: none; independent review and peer execution remain pending.
-- Pull request URL: not recorded yet.
+- Pull request URL: https://github.com/tasnimebj/telco-churn/pull/2 (provided by the author).
+- Repository pull request listing: https://github.com/tasnimebj/telco-churn/pulls (listing link, not an individual PR).
 
 ## Completed local environment recreation
 
