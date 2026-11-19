@@ -1,4 +1,28 @@
-# Telco Churn — TP01 to TP04
+# Telco Churn — TP01 to TP05
+
+## TP05: GitHub Actions and DevSecOps
+
+`.github/workflows/ci.yml` runs on pull requests targeting `master` and pushes to `master`. Three read-only jobs run on GitHub-hosted `ubuntu-latest`, with explicit timeouts and immutable reviewed action SHAs. Python is 3.12, uv is 0.13.5, and `uv sync --locked` includes the project and development tools.
+
+The quality job reproduces TP04 lint, format verification and synthetic tests, without raw CSV or MLflow services. The dependency job runs `pip-audit` inside the installed locked environment, including development dependencies. It queries advisory services and does not audit every lockfile platform variant or OS package; the unpublished local project cannot itself be matched against PyPI advisories. Findings or setup errors fail visibly, without suppressed exit codes.
+
+The secret job scans the clean checkout with default Gitleaks rules, before any environment/artifacts are created. Official Gitleaks 8.30.1 is pinned, and its Linux archive SHA-256 is checked against the value verified from that release's published checksum list. Matches are redacted. This is a directory-snapshot scan, not a Git-history scan. A real leaked credential requires revocation/rotation and investigation of prior commits, not just deletion of the current file.
+
+To reproduce the local project checks and audit:
+
+```powershell
+uv sync --locked
+uv run --locked ruff check src/telco_churn tests
+uv run --locked ruff format --check src/telco_churn tests
+uv run --locked pytest -q
+uv run --locked pip-audit
+```
+
+Run an installed, checksum-verified Gitleaks 8.30.1 on a separate clean checkout with `gitleaks dir --redact --exit-code 1 .`; do not scan the development environment and mistake its generated files for the source snapshot. The synthetic demonstration was performed outside the project with an explicit rule extending defaults; only redacted result logs were retained.
+
+`.github/dependabot.yml` requests weekly uv and GitHub Actions version-update PRs once merged into the default branch. Review release notes, manifest/lockfile or action SHA diffs, compatibility, synthetic tests and both scans before deciding to merge. Version-update scheduling differs from separately configured security alerts/updates. No auto-merge or privileged token is configured.
+
+See [the TP05 summary](reports/tp05_summary.md) for actual failed/repaired Actions runs, security outcomes and evidence. Passing pre-commit locally does not replace remote checks; requiring successful checks before merge is a separate repository policy, which this lab does not change.
 
 ## TP04: tests and local quality checks
 

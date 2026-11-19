@@ -54,7 +54,7 @@ def build_pipeline(classifier):
     categorical = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            ("encoder", OneHotEncoder(handle_unknown="error", sparse_output=False)),
+            ("encoder", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
         ]
     )
     preprocessor = ColumnTransformer(
