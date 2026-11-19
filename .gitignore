@@ -13,6 +13,13 @@ wheels/
 data/
 reports/*
 !reports/tp03_summary.md
+!reports/tp04_summary.md
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
 mlflow.db
 mlflow.db-*
 mlartifacts/
