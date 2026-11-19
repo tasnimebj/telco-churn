@@ -1,0 +1,29 @@
+DETECTION (exit 1; invented fixture outside project):
+Finding:     [1;3;mREDACTED[0m
+Secret:      [1;3;mREDACTED[0m
+RuleID:      tp05-demo-marker
+Entropy:     4.186704
+File:        C:/Users/tasni/AppData/Local/Temp/telco-tp05-demo-45qcizrr/demo/invented.txt
+Line:        1
+Fingerprint: C:/Users/tasni/AppData/Local/Temp/telco-tp05-demo-45qcizrr/demo/invented.txt:tp05-demo-marker:1
+
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+11:44AM INF scanned ~22 bytes (22 bytes) in 6.2ms
+11:44AM WRN leaks found: 1
+
+AFTER REMOVAL (exit 0):
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+11:44AM INF scanned ~0 bytes (0) in 3.05ms
+11:44AM INF no leaks found
