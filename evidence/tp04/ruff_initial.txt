@@ -1,0 +1,123 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> src\telco_churn\pipeline_demo.py:3:1
+   |
+ 1 |   """TP02 milestone 2: fit and validate the six-feature pipeline."""
+ 2 |
+ 3 | / import json
+ 4 | | from pathlib import Path
+ 5 | |
+ 6 | | import numpy as np
+ 7 | | from sklearn.linear_model import LogisticRegression
+ 8 | | from sklearn.metrics import accuracy_score, confusion_matrix
+ 9 | |
+10 | | from telco_churn.dataset import read_dataset
+11 | | from telco_churn.first_model import SEED, split_customers
+12 | | from telco_churn.pipeline import FEATURES, NUMERIC_FEATURES, build_pipeline, prepare_features
+   | |_____________________________________________________________________________________________^
+help: Organize imports
+   |
+11 | from telco_churn.first_model import SEED, split_customers
+   - from telco_churn.pipeline import FEATURES, NUMERIC_FEATURES, build_pipeline, prepare_features
+12 + from telco_churn.pipeline import (
+13 +     FEATURES,
+14 +     NUMERIC_FEATURES,
+15 +     build_pipeline,
+16 +     prepare_features,
+17 + )
+18 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> src\telco_churn\tracked_training.py:2:1
+   |
+ 1 |   """Explicit TP03 tracking; run against the documented local MLflow server."""
+ 2 | / import hashlib
+ 3 | | import json
+ 4 | | import subprocess
+ 5 | | import sys
+ 6 | | from importlib.metadata import version
+ 7 | | from pathlib import Path
+ 8 | | from time import perf_counter
+ 9 | |
+10 | | import mlflow
+11 | | import mlflow.sklearn
+12 | | import numpy as np
+13 | | from sklearn.linear_model import LogisticRegression
+14 | | from sklearn.tree import DecisionTreeClassifier
+15 | | from sklearn.ensemble import RandomForestClassifier
+16 | |
+17 | | from telco_churn.dataset import read_dataset
+18 | | from telco_churn.first_model import SEED, split_customers
+19 | | from telco_churn.pipeline import FEATURES, build_pipeline, prepare_features
+20 | | from telco_churn.training import evaluate_model
+   | |_______________________________________________^
+21 |
+22 |   URI = "http://127.0.0.1:5000"
+   |
+help: Organize imports
+   |
+12 | import numpy as np
+13 + from sklearn.ensemble import RandomForestClassifier
+14 | from sklearn.linear_model import LogisticRegression
+15 | from sklearn.tree import DecisionTreeClassifier
+   - from sklearn.ensemble import RandomForestClassifier
+16 |
+   |
+
+F401 [*] `numpy` imported but unused
+  --> src\telco_churn\tracked_training.py:12:17
+   |
+10 | import mlflow
+11 | import mlflow.sklearn
+12 | import numpy as np
+   |                 ^^
+13 | from sklearn.linear_model import LogisticRegression
+14 | from sklearn.tree import DecisionTreeClassifier
+   |
+help: Remove unused import: `numpy`
+   |
+11 | import mlflow.sklearn
+   - import numpy as np
+12 | from sklearn.linear_model import LogisticRegression
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> src\telco_churn\training.py:3:1
+   |
+ 1 |   """TP02 milestone 3: fair validation comparison; the test set stays reserved."""
+ 2 |
+ 3 | / import hashlib
+ 4 | | import json
+ 5 | | from pathlib import Path
+ 6 | | from time import perf_counter
+ 7 | |
+ 8 | | import pandas as pd
+ 9 | | from sklearn.dummy import DummyClassifier
+10 | | from sklearn.ensemble import RandomForestClassifier
+11 | | from sklearn.linear_model import LogisticRegression
+12 | | from sklearn.metrics import (
+13 | |     accuracy_score, average_precision_score, confusion_matrix,
+14 | |     precision_score, recall_score, f1_score,
+15 | | )
+16 | | from sklearn.tree import DecisionTreeClassifier
+17 | |
+18 | | from telco_churn.dataset import read_dataset
+19 | | from telco_churn.first_model import SEED, split_customers
+20 | | from telco_churn.pipeline import FEATURES, build_pipeline, prepare_features
+   | |___________________________________________________________________________^
+help: Organize imports
+   |
+12 | from sklearn.metrics import (
+   -     accuracy_score, average_precision_score, confusion_matrix,
+   -     precision_score, recall_score, f1_score,
+13 +     accuracy_score,
+14 +     average_precision_score,
+15 +     confusion_matrix,
+16 +     f1_score,
+17 +     precision_score,
+18 +     recall_score,
+19 | )
+   |
+
+Found 4 errors.
+[*] 4 fixable with `--fix`.

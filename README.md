@@ -1,4 +1,25 @@
-# Telco Churn — TP01 and TP02
+# Telco Churn — TP01 to TP04
+
+## TP04: tests and local quality checks
+
+From the project root, install the locked environment including development dependencies:
+
+```powershell
+uv sync --locked
+uv run pytest -q
+uv run ruff check src/telco_churn tests
+uv run ruff format --check src/telco_churn tests
+uv run pytest --cov=telco_churn --cov-report=term-missing --cov-report=xml:coverage.xml
+uv run pre-commit validate-config
+uv run pre-commit install
+uv run pre-commit run --all-files
+```
+
+Tests use only 16 synthetic customers and a modest logistic pipeline: they do not need the original CSV, saved models, network access or an MLflow server. The [contract](references/tp04_contract.md) describes the six required inputs, class order and expected exceptions. Tests cover missing columns, supported missingness/unseen categories, probability validity, serialization, label/ID exclusion, numeric parsing and prediction-state preservation.
+
+Ruff CLI and hooks use version 0.17.5 as resolved in `uv.lock` and pinned as hook tag `v0.17.5`. Rules E4/E7/E9 cover selected syntax/import/statement errors, F catches Pyflakes issues such as unused imports, and I checks import ordering; formatting is a separate check. Lint fixes run before formatting, only on package/scripts/tests. After hooks modify a staged file, review `git diff`, stage the correction and retry the commit. Hook installation is local and must be repeated after cloning. The first hook run downloads its environment; subsequent cached test/check runs need no tracking server.
+
+Do not run training or start MLflow from a hook. Run pytest manually; local hooks can be bypassed and do not implement server-side merge requirements. Coverage data and tool caches are ignored. See [the TP04 report](reports/tp04_summary.md) for actual coverage, regression-failure and blocked-commit evidence, along with Quality Gate discussion. SonarQube server installation/analysis was not performed because it is optional for this TP.
 
 ## TP03: MLflow tracking and Registry handover
 

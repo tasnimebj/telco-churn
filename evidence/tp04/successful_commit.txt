@@ -1,0 +1,10 @@
+[feat/tp04-quality 81917eb] Add TP04 behavioral tests and quality checks
+ 18 files changed, 821 insertions(+), 114 deletions(-)
+ create mode 100644 .pre-commit-config.yaml
+ create mode 100644 references/tp04_contract.md
+ create mode 100644 tests/conftest.py
+ create mode 100644 tests/test_input_contract.py
+ create mode 100644 tests/test_persistence.py
+ create mode 100644 tests/test_prediction.py
+ruff check...............................................................Passed
+ruff format..............................................................Passed
