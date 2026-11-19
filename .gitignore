@@ -12,6 +12,11 @@ wheels/
 # Original data and generated outputs stay local.
 data/
 reports/
+!reports/tp03_summary.md
+mlflow.db
+mlflow.db-*
+mlartifacts/
+mlruns/
 # Keep only the selected TP02 submission artifact and its metadata.
 models/*
 !models/selected_pipeline.joblib
