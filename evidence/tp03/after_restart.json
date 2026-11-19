@@ -1,0 +1,22 @@
+{
+  "alias_uri": "models:/telco-churn@candidate",
+  "version": "1",
+  "run_id": "636d146f9a2a48e89e68f88886cc8ad4",
+  "probabilities": [
+    0.4582902418248979,
+    0.2840378750868071,
+    0.21520903690085802,
+    0.6468754823867697,
+    0.31801612434579046
+  ],
+  "predictions": [
+    0,
+    0,
+    0,
+    1,
+    0
+  ],
+  "agreement": true,
+  "atol": 1e-12,
+  "fit_called": false
+}

@@ -11,7 +11,7 @@ wheels/
 
 # Original data and generated outputs stay local.
 data/
-reports/
+reports/*
 !reports/tp03_summary.md
 mlflow.db
 mlflow.db-*

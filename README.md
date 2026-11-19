@@ -1,5 +1,28 @@
 # Telco Churn — TP01 and TP02
 
+## TP03: MLflow tracking and Registry handover
+
+Install the locked environment with `uv sync --locked`. In terminal 1, from the project root:
+
+```powershell
+uv run mlflow server --host 127.0.0.1 --port 5000 --backend-store-uri sqlite:///mlflow.db --artifacts-destination ./mlartifacts
+```
+
+Leave this terminal running. Open http://127.0.0.1:5000 and select **Model training**. In terminal 2, from the same root and with the original CSV available:
+
+```powershell
+uv run python -m telco_churn.tracked_training
+uv run python -m telco_churn.tracked_prediction
+```
+
+The first command reuses TP02 parsing, customer allocations, six features, seed, threshold and evaluation. It logs three complete candidate pipelines using explicit MLflow APIs, train/validation dataset metadata, actual estimator settings, validation metrics, confusion matrices, customer allocations, source hash and Git identity. Commit code before final runs; the logged `git_dirty` tag records tracked uncommitted edits. The best validation AP determines the registered `telco-churn` version and mutable `candidate` alias; repeated training creates additional runs and versions. No test evaluation is performed.
+
+The second command is inference-only: it loads `models:/telco-churn@candidate` in a fresh process using the feature-only JSON batch and verifies original probability agreement (absolute tolerance 1e-12) and exact thresholded class agreement. If the alias no longer points to the recorded version, it fails visibly. An already loaded object is unchanged by subsequent alias reassignment.
+
+`mlflow.db` preserves run metadata and registry records. `mlartifacts/` preserves model files and logged artifacts. Both are intentionally local and excluded from Git. Restart the server with the same command and working directory to recover the records. A colleague on another machine must recreate their own runs from code, environment and original CSV, or obtain the database and artifact store with appropriate access; local IDs and localhost links alone do not transfer them. Dataset digests/schema records do not preserve the raw DataFrames or recover the CSV from its hash.
+
+See [the TP03 submission summary](reports/tp03_summary.md) and `evidence/tp03/` for run IDs, selected version, comparison, screenshots, prediction agreement and persistence evidence. Only trusted models should be loaded. Model signature describes the parsed, unencoded six-feature schema, not the raw CSV quoting format. Official API reference: https://mlflow.org/docs/latest/api_reference/python_api/mlflow.sklearn.html
+
 ## Quick check from GitHub without the training CSV
 
 The selected TP02 artifact and its metadata are included in Git. Clone the repository, enter its root, and run:
