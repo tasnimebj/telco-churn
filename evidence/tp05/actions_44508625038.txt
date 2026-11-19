@@ -1,0 +1,202 @@
+Quality (Ruff and pytest)/5_Ruff lint.txt
+﻿2026-11-19T10:45:47.1021476Z ##[group]Run uv run --locked ruff check src/telco_churn tests
+2026-11-19T10:45:47.1022084Z uv run --locked ruff check src/telco_churn tests
+2026-11-19T10:45:47.1081167Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:45:47.1081491Z env:
+2026-11-19T10:45:47.1081826Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-11-19T10:45:47.1082257Z   UV_PYTHON: 3.12
+2026-11-19T10:45:47.1082594Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-11-19T10:45:47.1083002Z ##[endgroup]
+2026-11-19T10:45:47.2550694Z All checks passed!
+
+
+FILE Quality (Ruff and pytest)/6_Ruff format verification.txt
+﻿2026-11-19T10:45:47.2870823Z ##[group]Run uv run --locked ruff format --check src/telco_churn tests
+2026-11-19T10:45:47.2898356Z uv run --locked ruff format --check src/telco_churn tests
+2026-11-19T10:45:47.2956916Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:45:47.2957298Z env:
+2026-11-19T10:45:47.2957641Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-11-19T10:45:47.2958096Z   UV_PYTHON: 3.12
+2026-11-19T10:45:47.2958413Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-11-19T10:45:47.2958800Z ##[endgroup]
+2026-11-19T10:45:47.4222094Z 14 files already formatted
+
+
+FILE Quality (Ruff and pytest)/7_Run synthetic behavior tests.txt
+﻿2026-11-19T10:45:47.5417373Z ##[group]Run uv run --locked pytest -q
+2026-11-19T10:45:47.5417812Z uv run --locked pytest -q
+2026-11-19T10:45:47.5473404Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:45:47.5473626Z env:
+2026-11-19T10:45:47.5473867Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-11-19T10:45:47.5474336Z   UV_PYTHON: 3.12
+2026-11-19T10:45:47.5474546Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-11-19T10:45:47.5474805Z ##[endgroup]
+2026-11-19T10:45:52.0286103Z ......F.....                                                             [100%]
+2026-11-19T10:45:52.0286713Z =================================== FAILURES ===================================
+2026-11-19T10:45:52.0287223Z ______________ test_supported_missing_numeric_and_unseen_category ______________
+2026-11-19T10:45:52.0287566Z 
+2026-11-19T10:45:52.0287736Z fitted_pipeline = Pipeline(steps=[('preprocessor',
+2026-11-19T10:45:52.0288134Z                  ColumnTransformer(transformers=[('num',
+2026-11-19T10:45:52.0288491Z                             ...mentMethod'])])),
+2026-11-19T10:45:52.0289063Z                 ('classifier',
+2026-11-19T10:45:52.0289409Z                  LogisticRegression(max_iter=1000, random_state=42))])
+2026-11-19T10:45:52.0289974Z sample_features =     tenure  MonthlyCharges  ... InternetService     PaymentMethod
+2026-11-19T10:45:52.0290518Z 0        1            20.0  ...             DSL  Ele...          No     Bank transfer
+2026-11-19T10:45:52.0290926Z 15      72           105.0  ...             DSL       Credit card
+2026-11-19T10:45:52.0291174Z 
+2026-11-19T10:45:52.0291263Z [16 rows x 6 columns]
+2026-11-19T10:45:52.0291407Z 
+2026-11-19T10:45:52.0291567Z     def test_supported_missing_numeric_and_unseen_category(
+2026-11-19T10:45:52.0291951Z         fitted_pipeline, sample_features
+2026-11-19T10:45:52.0292245Z     ):
+2026-11-19T10:45:52.0292463Z         unseen = "Never-seen contract"
+2026-11-19T10:45:52.0292751Z         encoder = (
+2026-11-19T10:45:52.0293024Z             fitted_pipeline.named_steps["preprocessor"]
+2026-11-19T10:45:52.0293373Z             .named_transformers_["cat"]
+2026-11-19T10:45:52.0293666Z             .named_steps["encoder"]
+2026-11-19T10:45:52.0293928Z         )
+2026-11-19T10:45:52.0294206Z         assert unseen not in sample_features["Contract"].values
+2026-11-19T10:45:52.0294616Z         assert unseen not in encoder.categories_[0]
+2026-11-19T10:45:52.0294978Z         batch = sample_features.head(3).copy()
+2026-11-19T10:45:52.0295346Z         batch.loc[batch.index[0], "TotalCharges"] = np.nan
+2026-11-19T10:45:52.0295727Z         batch.loc[batch.index[0], "Contract"] = unseen
+2026-11-19T10:45:52.0296064Z         X = prepare_features(batch)
+2026-11-19T10:45:52.0296376Z >       predictions = fitted_pipeline.predict(X)
+2026-11-19T10:45:52.0296720Z                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0296922Z 
+2026-11-19T10:45:52.0297032Z tests/test_input_contract.py:28: 
+2026-11-19T10:45:52.0297374Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-11-19T10:45:52.0297873Z .venv/lib/python3.12/site-packages/sklearn/pipeline.py:794: in predict
+2026-11-19T10:45:52.0298305Z     Xt = transform.transform(Xt)
+2026-11-19T10:45:52.0298574Z          ^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0299113Z .venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:327: in wrapped
+2026-11-19T10:45:52.0299594Z     data_to_wrap = f(self, X, *args, **kwargs)
+2026-11-19T10:45:52.0299904Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0300387Z .venv/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py:1074: in transform
+2026-11-19T10:45:52.0300913Z     Xs = self._call_func_on_transformers(
+2026-11-19T10:45:52.0301493Z .venv/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py:887: in _call_func_on_transformers
+2026-11-19T10:45:52.0302097Z     return Parallel(n_jobs=self.n_jobs)(jobs)
+2026-11-19T10:45:52.0302406Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0302820Z .venv/lib/python3.12/site-packages/sklearn/utils/parallel.py:91: in __call__
+2026-11-19T10:45:52.0303871Z     return super().__call__(iterable_with_config_and_warning_filters)
+2026-11-19T10:45:52.0304280Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0304707Z .venv/lib/python3.12/site-packages/joblib/parallel.py:2012: in __call__
+2026-11-19T10:45:52.0305372Z     return output if self.return_generator else list(output)
+2026-11-19T10:45:52.0305743Z                                                 ^^^^^^^^^^^^
+2026-11-19T10:45:52.0306229Z .venv/lib/python3.12/site-packages/joblib/parallel.py:1940: in _get_sequential_output
+2026-11-19T10:45:52.0306702Z     res = func(*args, **kwargs)
+2026-11-19T10:45:52.0306952Z           ^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0307339Z .venv/lib/python3.12/site-packages/sklearn/utils/parallel.py:184: in __call__
+2026-11-19T10:45:52.0307778Z     return self.function(*args, **kwargs)
+2026-11-19T10:45:52.0308070Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0308511Z .venv/lib/python3.12/site-packages/sklearn/pipeline.py:1546: in _transform_one
+2026-11-19T10:45:52.0309233Z     res = transformer.transform(X, **params["transform"])
+2026-11-19T10:45:52.0309596Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0310024Z .venv/lib/python3.12/site-packages/sklearn/pipeline.py:1110: in transform
+2026-11-19T10:45:52.0310539Z     Xt = transform.transform(Xt, **routed_params[name].transform)
+2026-11-19T10:45:52.0310940Z          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0311419Z .venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:327: in wrapped
+2026-11-19T10:45:52.0311876Z     data_to_wrap = f(self, X, *args, **kwargs)
+2026-11-19T10:45:52.0312194Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-19T10:45:52.0312681Z .venv/lib/python3.12/site-packages/sklearn/preprocessing/_encoders.py:1051: in transform
+2026-11-19T10:45:52.0313207Z     X_int, X_mask = self._transform(
+2026-11-19T10:45:52.0313569Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-11-19T10:45:52.0313839Z 
+2026-11-19T10:45:52.0313967Z self = OneHotEncoder(sparse_output=False)
+2026-11-19T10:45:52.0314365Z X = array([['Never-seen contract', 'DSL', 'Electronic check'],
+2026-11-19T10:45:52.0314773Z        ['One year', 'Fiber optic', 'Mailed check'],
+2026-11-19T10:45:52.0315133Z        ['Two year', 'No', 'Bank transfer']], dtype=object)
+2026-11-19T10:45:52.0315539Z handle_unknown = 'error', ensure_all_finite = 'allow-nan'
+2026-11-19T10:45:52.0315957Z warn_on_unknown = False, ignore_category_indices = None
+2026-11-19T10:45:52.0316222Z 
+2026-11-19T10:45:52.0316307Z     def _transform(
+2026-11-19T10:45:52.0316579Z         self,
+2026-11-19T10:45:52.0316796Z         X,
+2026-11-19T10:45:52.0317012Z         handle_unknown="error",
+2026-11-19T10:45:52.0317285Z         ensure_all_finite=True,
+2026-11-19T10:45:52.0317556Z         warn_on_unknown=False,
+2026-11-19T10:45:52.0317839Z         ignore_category_indices=None,
+2026-11-19T10:45:52.0318121Z     ):
+2026-11-19T10:45:52.0318359Z         X_list, n_samples, n_features = self._check_X(
+2026-11-19T10:45:52.0318713Z             X, ensure_all_finite=ensure_all_finite
+2026-11-19T10:45:52.0319133Z         )
+2026-11-19T10:45:52.0319440Z         validate_data(self, X=X, reset=False, skip_check_array=True)
+2026-11-19T10:45:52.0319819Z     
+2026-11-19T10:45:52.0320084Z         X_int = np.zeros((n_samples, n_features), dtype=int)
+2026-11-19T10:45:52.0320491Z         X_mask = np.ones((n_samples, n_features), dtype=bool)
+2026-11-19T10:45:52.0320834Z     
+2026-11-19T10:45:52.0321045Z         columns_with_unknown = []
+2026-11-19T10:45:52.0321329Z         for i in range(n_features):
+2026-11-19T10:45:52.0321616Z             Xi = X_list[i]
+2026-11-19T10:45:52.0321999Z             diff, valid_mask = _check_unknown(Xi, self.categories_[i], return_mask=True)
+2026-11-19T10:45:52.0322416Z     
+2026-11-19T10:45:52.0322622Z             if not np.all(valid_mask):
+2026-11-19T10:45:52.0323302Z                 if handle_unknown == "error":
+2026-11-19T10:45:52.0323605Z                     msg = (
+2026-11-19T10:45:52.0323896Z                         "Found unknown categories {0} in column {1}"
+2026-11-19T10:45:52.0324272Z                         " during transform".format(diff, i)
+2026-11-19T10:45:52.0324764Z                     )
+2026-11-19T10:45:52.0325006Z >                   raise ValueError(msg)
+2026-11-19T10:45:52.0325530Z E                   ValueError: Found unknown categories ['Never-seen contract'] in column 0 during transform
+2026-11-19T10:45:52.0325978Z 
+2026-11-19T10:45:52.0326251Z .venv/lib/python3.12/site-packages/sklearn/preprocessing/_encoders.py:221: ValueError
+2026-11-19T10:45:52.0326810Z =========================== short test summary info ============================
+2026-11-19T10:45:52.0327904Z FAILED tests/test_input_contract.py::test_supported_missing_numeric_and_unseen_category - ValueError: Found unknown categories ['Never-seen contract'] in column 0 during transform
+2026-11-19T10:45:52.0328771Z 1 failed, 11 passed in 0.36s
+2026-11-19T10:45:52.3084017Z ##[error]Process completed with exit code 1.
+
+
+FILE Gitleaks directory scan/3_Install official Gitleaks 8.30.1 with verified checksum.txt
+﻿2026-11-19T10:45:41.8861352Z ##[group]Run set -euo pipefail
+2026-11-19T10:45:41.8862581Z set -euo pipefail
+2026-11-19T10:45:41.8863898Z archive="$RUNNER_TEMP/gitleaks_8.30.1_linux_x64.tar.gz"
+2026-11-19T10:45:41.8867052Z curl --fail --location --retry 3 https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz --output "$archive"
+2026-11-19T10:45:41.8871285Z echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $archive" | sha256sum --check --strict
+2026-11-19T10:45:41.8873809Z tar -xzf "$archive" -C "$RUNNER_TEMP" gitleaks
+2026-11-19T10:45:41.8875135Z "$RUNNER_TEMP/gitleaks" version
+2026-11-19T10:45:41.8931039Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-19T10:45:41.8932441Z ##[endgroup]
+2026-11-19T10:45:41.9125341Z   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+2026-11-19T10:45:41.9128201Z                                  Dload  Upload  Total   Spent   Left   Speed
+2026-11-19T10:45:41.9130053Z 
+2026-11-19T10:45:41.9288406Z   0      0   0      0   0      0      0      0                              0
+2026-11-19T10:45:41.9290767Z   0      0   0      0   0      0      0      0                              0
+2026-11-19T10:45:41.9292376Z   0      0   0      0   0      0      0      0                              0
+2026-11-19T10:45:41.9293397Z 
+2026-11-19T10:45:41.9611924Z   0      0   0      0   0      0      0      0                              0
+2026-11-19T10:45:41.9614099Z 100  7.84M 100  7.84M   0      0 158.7M      0                              0
+2026-11-19T10:45:41.9615809Z 100  7.84M 100  7.84M   0      0 158.5M      0                              0
+2026-11-19T10:45:41.9617484Z 100  7.84M 100  7.84M   0      0 158.3M      0                              0
+2026-11-19T10:45:41.9733005Z /home/runner/work/_temp/gitleaks_8.30.1_linux_x64.tar.gz: OK
+2026-11-19T10:45:42.3510740Z 8.30.1
+
+
+FILE Gitleaks directory scan/4_Scan checked-out files with default rules and redacted matches.txt
+﻿2026-11-19T10:45:42.3707736Z ##[group]Run "$RUNNER_TEMP/gitleaks" dir --redact --exit-code 1 .
+2026-11-19T10:45:42.3710259Z "$RUNNER_TEMP/gitleaks" dir --redact --exit-code 1 .
+2026-11-19T10:45:42.3761613Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:45:42.3762950Z ##[endgroup]
+2026-11-19T10:45:42.6671011Z 
+2026-11-19T10:45:42.6672057Z     ○
+2026-11-19T10:45:42.6673631Z     │╲
+2026-11-19T10:45:42.6675321Z     │ ○
+2026-11-19T10:45:42.6676844Z     ○ ░
+2026-11-19T10:45:42.6678367Z     ░    gitleaks
+2026-11-19T10:45:42.6679505Z 
+2026-11-19T10:45:42.9287140Z 10:45AM INF scanned ~3295733 bytes (3.30 MB) in 110ms
+2026-11-19T10:45:42.9290585Z 10:45AM INF no leaks found
+
+
+FILE Python dependency audit/5_Audit installed Python environment.txt
+﻿2026-11-19T10:45:47.5922531Z ##[group]Run uv run --locked pip-audit
+2026-11-19T10:45:47.5922891Z uv run --locked pip-audit
+2026-11-19T10:45:47.5957038Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:45:47.5957320Z env:
+2026-11-19T10:45:47.5957618Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-11-19T10:45:47.5957964Z   UV_PYTHON: 3.12
+2026-11-19T10:45:47.5958226Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-11-19T10:45:47.5958546Z ##[endgroup]
+2026-11-19T10:45:51.1284309Z No known vulnerabilities found
+2026-11-19T10:45:51.1294037Z Name        Skip Reason
+2026-11-19T10:45:51.1294532Z ----------- --------------------------------------------------------------------------
+2026-11-19T10:45:51.1295050Z telco-churn Dependency not found on PyPI and could not be audited: telco-churn (0.1.0)

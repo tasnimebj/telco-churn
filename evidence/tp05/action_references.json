@@ -1,0 +1,14 @@
+{
+  "actions/checkout": {
+    "tag": "v7.0.1",
+    "url": "https://github.com/actions/checkout/releases/tag/v7.0.1",
+    "assets": [],
+    "sha": "3d3c42e5aac5ba805825da76410c181273ba90b1"
+  },
+  "astral-sh/setup-uv": {
+    "tag": "v10.3.3",
+    "url": "https://github.com/astral-sh/setup-uv/releases/tag/v10.3.3",
+    "assets": [],
+    "sha": "68559e99cc807c1eb7e9238fd43a15bba460eec2"
+  }
+}

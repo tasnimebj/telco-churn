@@ -1,0 +1,91 @@
+Gitleaks directory scan/3_Install official Gitleaks 8.30.1 with verified checksum.txt
+﻿2026-11-19T10:46:38.4195087Z ##[group]Run set -euo pipefail
+2026-11-19T10:46:38.4196424Z set -euo pipefail
+2026-11-19T10:46:38.4198071Z archive="$RUNNER_TEMP/gitleaks_8.30.1_linux_x64.tar.gz"
+2026-11-19T10:46:38.4201450Z curl --fail --location --retry 3 https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz --output "$archive"
+2026-11-19T10:46:38.4205652Z echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $archive" | sha256sum --check --strict
+2026-11-19T10:46:38.4208559Z tar -xzf "$archive" -C "$RUNNER_TEMP" gitleaks
+2026-11-19T10:46:38.4210071Z "$RUNNER_TEMP/gitleaks" version
+2026-11-19T10:46:38.4267716Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-19T10:46:38.4269282Z ##[endgroup]
+2026-11-19T10:46:38.4484449Z   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+2026-11-19T10:46:38.4488203Z                                  Dload  Upload  Total   Spent   Left   Speed
+2026-11-19T10:46:38.4489752Z 
+2026-11-19T10:46:38.5517508Z   0      0   0      0   0      0      0      0                              0
+2026-11-19T10:46:38.5520575Z   0      0   0      0   0      0      0      0                              0
+2026-11-19T10:46:38.5523574Z   0      0   0      0   0      0      0      0                              0
+2026-11-19T10:46:38.5524864Z 
+2026-11-19T10:46:38.6686236Z   0      0   0      0   0      0      0      0                              0
+2026-11-19T10:46:38.6689117Z 100  7.84M 100  7.84M   0      0 35.51M      0                              0
+2026-11-19T10:46:38.6691345Z 100  7.84M 100  7.84M   0      0 35.50M      0                              0
+2026-11-19T10:46:38.6693322Z 100  7.84M 100  7.84M   0      0 35.50M      0                              0
+2026-11-19T10:46:38.6810335Z /home/runner/work/_temp/gitleaks_8.30.1_linux_x64.tar.gz: OK
+2026-11-19T10:46:39.0617680Z 8.30.1
+
+
+FILE Gitleaks directory scan/4_Scan checked-out files with default rules and redacted matches.txt
+﻿2026-11-19T10:46:39.0825838Z ##[group]Run "$RUNNER_TEMP/gitleaks" dir --redact --exit-code 1 .
+2026-11-19T10:46:39.0828057Z "$RUNNER_TEMP/gitleaks" dir --redact --exit-code 1 .
+2026-11-19T10:46:39.0880681Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:46:39.0881763Z ##[endgroup]
+2026-11-19T10:46:39.3927950Z 
+2026-11-19T10:46:39.3928605Z     ○
+2026-11-19T10:46:39.3929285Z     │╲
+2026-11-19T10:46:39.3929741Z     │ ○
+2026-11-19T10:46:39.3930144Z     ○ ░
+2026-11-19T10:46:39.3930517Z     ░    gitleaks
+2026-11-19T10:46:39.3930763Z 
+2026-11-19T10:46:39.6888633Z 10:46AM INF scanned ~3298320 bytes (3.30 MB) in 147ms
+2026-11-19T10:46:39.6889888Z 10:46AM INF no leaks found
+
+
+FILE Quality (Ruff and pytest)/5_Ruff lint.txt
+﻿2026-11-19T10:46:43.1961318Z ##[group]Run uv run --locked ruff check src/telco_churn tests
+2026-11-19T10:46:43.1961816Z uv run --locked ruff check src/telco_churn tests
+2026-11-19T10:46:43.2013170Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:46:43.2013567Z env:
+2026-11-19T10:46:43.2013870Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-11-19T10:46:43.2014238Z   UV_PYTHON: 3.12
+2026-11-19T10:46:43.2014509Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-11-19T10:46:43.2014834Z ##[endgroup]
+2026-11-19T10:46:43.3675891Z All checks passed!
+
+
+FILE Quality (Ruff and pytest)/6_Ruff format verification.txt
+﻿2026-11-19T10:46:43.3736843Z ##[group]Run uv run --locked ruff format --check src/telco_churn tests
+2026-11-19T10:46:43.3737372Z uv run --locked ruff format --check src/telco_churn tests
+2026-11-19T10:46:43.3789065Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:46:43.3789324Z env:
+2026-11-19T10:46:43.3789611Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-11-19T10:46:43.3789957Z   UV_PYTHON: 3.12
+2026-11-19T10:46:43.3790214Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-11-19T10:46:43.3790532Z ##[endgroup]
+2026-11-19T10:46:43.4142410Z 14 files already formatted
+
+
+FILE Quality (Ruff and pytest)/7_Run synthetic behavior tests.txt
+﻿2026-11-19T10:46:43.4201280Z ##[group]Run uv run --locked pytest -q
+2026-11-19T10:46:43.4201640Z uv run --locked pytest -q
+2026-11-19T10:46:43.4255294Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:46:43.4255544Z env:
+2026-11-19T10:46:43.4255842Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-11-19T10:46:43.4256191Z   UV_PYTHON: 3.12
+2026-11-19T10:46:43.4256445Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-11-19T10:46:43.4256772Z ##[endgroup]
+2026-11-19T10:46:48.3839673Z ............                                                             [100%]
+2026-11-19T10:46:48.3840728Z 12 passed in 0.28s
+
+
+FILE Python dependency audit/5_Audit installed Python environment.txt
+﻿2026-11-19T10:46:42.9306165Z ##[group]Run uv run --locked pip-audit
+2026-11-19T10:46:42.9306383Z uv run --locked pip-audit
+2026-11-19T10:46:42.9334622Z shell: /usr/bin/bash -e {0}
+2026-11-19T10:46:42.9334773Z env:
+2026-11-19T10:46:42.9334936Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-11-19T10:46:42.9335136Z   UV_PYTHON: 3.12
+2026-11-19T10:46:42.9335309Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-11-19T10:46:42.9335487Z ##[endgroup]
+2026-11-19T10:46:45.9718687Z No known vulnerabilities found
+2026-11-19T10:46:45.9726226Z Name        Skip Reason
+2026-11-19T10:46:45.9726542Z ----------- --------------------------------------------------------------------------
+2026-11-19T10:46:45.9727067Z telco-churn Dependency not found on PyPI and could not be audited: telco-churn (0.1.0)
