@@ -1,4 +1,72 @@
-# Telco Churn — TP01 and TP02
+# Telco Churn — TP01 to TP05
+
+## TP05: GitHub Actions and DevSecOps
+
+`.github/workflows/ci.yml` runs on pull requests targeting `master` and pushes to `master`. Three read-only jobs run on GitHub-hosted `ubuntu-latest`, with explicit timeouts and immutable reviewed action SHAs. Python is 3.12, uv is 0.13.5, and `uv sync --locked` includes the project and development tools.
+
+The quality job reproduces TP04 lint, format verification and synthetic tests, without raw CSV or MLflow services. The dependency job runs `pip-audit` inside the installed locked environment, including development dependencies. It queries advisory services and does not audit every lockfile platform variant or OS package; the unpublished local project cannot itself be matched against PyPI advisories. Findings or setup errors fail visibly, without suppressed exit codes.
+
+The secret job scans the clean checkout with default Gitleaks rules, before any environment/artifacts are created. Official Gitleaks 8.30.1 is pinned, and its Linux archive SHA-256 is checked against the value verified from that release's published checksum list. Matches are redacted. This is a directory-snapshot scan, not a Git-history scan. A real leaked credential requires revocation/rotation and investigation of prior commits, not just deletion of the current file.
+
+To reproduce the local project checks and audit:
+
+```powershell
+uv sync --locked
+uv run --locked ruff check src/telco_churn tests
+uv run --locked ruff format --check src/telco_churn tests
+uv run --locked pytest -q
+uv run --locked pip-audit
+```
+
+Run an installed, checksum-verified Gitleaks 8.30.1 on a separate clean checkout with `gitleaks dir --redact --exit-code 1 .`; do not scan the development environment and mistake its generated files for the source snapshot. The synthetic demonstration was performed outside the project with an explicit rule extending defaults; only redacted result logs were retained.
+
+`.github/dependabot.yml` requests weekly uv and GitHub Actions version-update PRs once merged into the default branch. Review release notes, manifest/lockfile or action SHA diffs, compatibility, synthetic tests and both scans before deciding to merge. Version-update scheduling differs from separately configured security alerts/updates. No auto-merge or privileged token is configured.
+
+See [the TP05 summary](reports/tp05_summary.md) for actual failed/repaired Actions runs, security outcomes and evidence. Passing pre-commit locally does not replace remote checks; requiring successful checks before merge is a separate repository policy, which this lab does not change.
+
+## TP04: tests and local quality checks
+
+From the project root, install the locked environment including development dependencies:
+
+```powershell
+uv sync --locked
+uv run pytest -q
+uv run ruff check src/telco_churn tests
+uv run ruff format --check src/telco_churn tests
+uv run pytest --cov=telco_churn --cov-report=term-missing --cov-report=xml:coverage.xml
+uv run pre-commit validate-config
+uv run pre-commit install
+uv run pre-commit run --all-files
+```
+
+Tests use only 16 synthetic customers and a modest logistic pipeline: they do not need the original CSV, saved models, network access or an MLflow server. The [contract](references/tp04_contract.md) describes the six required inputs, class order and expected exceptions. Tests cover missing columns, supported missingness/unseen categories, probability validity, serialization, label/ID exclusion, numeric parsing and prediction-state preservation.
+
+Ruff CLI and hooks use version 0.17.5 as resolved in `uv.lock` and pinned as hook tag `v0.17.5`. Rules E4/E7/E9 cover selected syntax/import/statement errors, F catches Pyflakes issues such as unused imports, and I checks import ordering; formatting is a separate check. Lint fixes run before formatting, only on package/scripts/tests. After hooks modify a staged file, review `git diff`, stage the correction and retry the commit. Hook installation is local and must be repeated after cloning. The first hook run downloads its environment; subsequent cached test/check runs need no tracking server.
+
+Do not run training or start MLflow from a hook. Run pytest manually; local hooks can be bypassed and do not implement server-side merge requirements. Coverage data and tool caches are ignored. See [the TP04 report](reports/tp04_summary.md) for actual coverage, regression-failure and blocked-commit evidence, along with Quality Gate discussion. SonarQube server installation/analysis was not performed because it is optional for this TP.
+
+## TP03: MLflow tracking and Registry handover
+
+Install the locked environment with `uv sync --locked`. In terminal 1, from the project root:
+
+```powershell
+uv run mlflow server --host 127.0.0.1 --port 5000 --backend-store-uri sqlite:///mlflow.db --artifacts-destination ./mlartifacts
+```
+
+Leave this terminal running. Open http://127.0.0.1:5000 and select **Model training**. In terminal 2, from the same root and with the original CSV available:
+
+```powershell
+uv run python -m telco_churn.tracked_training
+uv run python -m telco_churn.tracked_prediction
+```
+
+The first command reuses TP02 parsing, customer allocations, six features, seed, threshold and evaluation. It logs three complete candidate pipelines using explicit MLflow APIs, train/validation dataset metadata, actual estimator settings, validation metrics, confusion matrices, customer allocations, source hash and Git identity. Commit code before final runs; the logged `git_dirty` tag records tracked uncommitted edits. The best validation AP determines the registered `telco-churn` version and mutable `candidate` alias; repeated training creates additional runs and versions. No test evaluation is performed.
+
+The second command is inference-only: it loads `models:/telco-churn@candidate` in a fresh process using the feature-only JSON batch and verifies original probability agreement (absolute tolerance 1e-12) and exact thresholded class agreement. If the alias no longer points to the recorded version, it fails visibly. An already loaded object is unchanged by subsequent alias reassignment.
+
+`mlflow.db` preserves run metadata and registry records. `mlartifacts/` preserves model files and logged artifacts. Both are intentionally local and excluded from Git. Restart the server with the same command and working directory to recover the records. A colleague on another machine must recreate their own runs from code, environment and original CSV, or obtain the database and artifact store with appropriate access; local IDs and localhost links alone do not transfer them. Dataset digests/schema records do not preserve the raw DataFrames or recover the CSV from its hash.
+
+See [the TP03 submission summary](reports/tp03_summary.md) and `evidence/tp03/` for run IDs, selected version, comparison, screenshots, prediction agreement and persistence evidence. Only trusted models should be loaded. Model signature describes the parsed, unencoded six-feature schema, not the raw CSV quoting format. Official API reference: https://mlflow.org/docs/latest/api_reference/python_api/mlflow.sklearn.html
 
 ## Quick check from GitHub without the training CSV
 

@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.15, pytest-9.2.0, pluggy-1.7.0
+rootdir: C:\Users\tasni\Documents\mlopstp\telco-churn
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0, platformdirs-4.14.7, cov-7.1.0
+collected 12 items
+
+tests\test_input_contract.py .........                                   [ 75%]
+tests\test_persistence.py .                                              [ 83%]
+tests\test_prediction.py ..                                              [100%]
+
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.15-final-0 _______________
+
+Name                                    Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------
+src\telco_churn\__init__.py                 2      1    50%   2
+src\telco_churn\artifacts.py               69     69     0%   3-148
+src\telco_churn\dataset.py                 34     34     0%   1-85
+src\telco_churn\first_model.py             45     45     0%   3-89
+src\telco_churn\pipeline.py                36      3    92%   26, 30, 35
+src\telco_churn\pipeline_demo.py           32     32     0%   3-65
+src\telco_churn\prediction.py              28     28     0%   3-53
+src\telco_churn\tracked_prediction.py      32     32     0%   3-55
+src\telco_churn\tracked_training.py        80     80     0%   3-182
+src\telco_churn\training.py                63     63     0%   3-129
+---------------------------------------------------------------------
+TOTAL                                     421    387     8%
+Coverage XML written to file coverage.xml
+============================= 12 passed in 1.21s ==============================

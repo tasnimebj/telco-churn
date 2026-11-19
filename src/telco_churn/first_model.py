@@ -50,11 +50,15 @@ def main():
     }.items():
         model.fit(X_train, y_train)
         predictions = model.predict(X_valid)
-        results.append({
-            "model": name,
-            "validation_accuracy": float(accuracy_score(y_valid, predictions)),
-            "confusion_matrix": confusion_matrix(y_valid, predictions, labels=[0, 1]).tolist(),
-        })
+        results.append(
+            {
+                "model": name,
+                "validation_accuracy": float(accuracy_score(y_valid, predictions)),
+                "confusion_matrix": confusion_matrix(
+                    y_valid, predictions, labels=[0, 1]
+                ).tolist(),
+            }
+        )
 
     report = {
         "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
@@ -72,7 +76,10 @@ def main():
     output = Path("evidence/tp02/first_model.json")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print("Split sizes:", {name: split["size"] for name, split in report["splits"].items()})
+    print(
+        "Split sizes:",
+        {name: split["size"] for name, split in report["splits"].items()},
+    )
     print(report["matrix_definition"])
     print(json.dumps(results, indent=2))
     print(f"Evidence saved to {output}")

@@ -35,24 +35,32 @@ def prepare_features(records):
             raise ValueError(f"Expected strings or missing values in {column}")
         # Normalize categorical blanks/nulls for the sklearn imputer.
         stripped = values.astype("string").str.strip()
-        result[column] = stripped.replace("", pd.NA).astype(object).where(
-            stripped.notna() & stripped.ne("").fillna(False), np.nan
+        result[column] = (
+            stripped.replace("", pd.NA)
+            .astype(object)
+            .where(stripped.notna() & stripped.ne("").fillna(False), np.nan)
         )
     return result
 
 
 def build_pipeline(classifier):
     """Construct a fresh preprocessor; do not load data or fit here."""
-    numeric = Pipeline([
-        ("imputer", SimpleImputer(strategy="median")),
-        ("scaler", StandardScaler()),
-    ])
-    categorical = Pipeline([
-        ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("encoder", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
-    ])
-    preprocessor = ColumnTransformer([
-        ("num", numeric, NUMERIC_FEATURES),
-        ("cat", categorical, CATEGORICAL_FEATURES),
-    ])
+    numeric = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", StandardScaler()),
+        ]
+    )
+    categorical = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("encoder", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
+        ]
+    )
+    preprocessor = ColumnTransformer(
+        [
+            ("num", numeric, NUMERIC_FEATURES),
+            ("cat", categorical, CATEGORICAL_FEATURES),
+        ]
+    )
     return Pipeline([("preprocessor", preprocessor), ("classifier", classifier)])

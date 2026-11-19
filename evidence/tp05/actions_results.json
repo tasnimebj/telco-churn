@@ -1,0 +1,254 @@
+[
+  {
+    "id": 44508766257,
+    "html_url": "https://github.com/tasnimebj/telco-churn/actions/runs/44508766257",
+    "head_sha": "4aaa49cff8cf907b601f44b9b1b51ffa7585995d",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "success",
+    "name": "Telco CI",
+    "run_number": 2,
+    "jobs": [
+      {
+        "name": "Python dependency audit",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned uv and Python 3.12",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install locked environment including audit tool",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit installed Python environment",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install pinned uv and Python 3.12",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "Quality (Ruff and pytest)",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned uv and Python 3.12",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install locked project and development dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff format verification",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run synthetic behavior tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install pinned uv and Python 3.12",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "Gitleaks directory scan",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out clean source snapshot",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install official Gitleaks 8.30.1 with verified checksum",
+            "conclusion": "success"
+          },
+          {
+            "name": "Scan checked-out files with default rules and redacted matches",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out clean source snapshot",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 44508625038,
+    "html_url": "https://github.com/tasnimebj/telco-churn/actions/runs/44508625038",
+    "head_sha": "78cc10c620e361a2333e033ed039475679bd3033",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "name": "Telco CI",
+    "run_number": 1,
+    "jobs": [
+      {
+        "name": "Gitleaks directory scan",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out clean source snapshot",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install official Gitleaks 8.30.1 with verified checksum",
+            "conclusion": "success"
+          },
+          {
+            "name": "Scan checked-out files with default rules and redacted matches",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out clean source snapshot",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "Quality (Ruff and pytest)",
+        "conclusion": "failure",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned uv and Python 3.12",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install locked project and development dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff format verification",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run synthetic behavior tests",
+            "conclusion": "failure"
+          },
+          {
+            "name": "Post Install pinned uv and Python 3.12",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "Python dependency audit",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned uv and Python 3.12",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install locked environment including audit tool",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit installed Python environment",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install pinned uv and Python 3.12",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  }
+]

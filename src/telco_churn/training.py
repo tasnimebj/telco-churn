@@ -10,8 +10,12 @@ from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
-    accuracy_score, average_precision_score, confusion_matrix,
-    precision_score, recall_score, f1_score,
+    accuracy_score,
+    average_precision_score,
+    confusion_matrix,
+    f1_score,
+    precision_score,
+    recall_score,
 )
 from sklearn.tree import DecisionTreeClassifier
 
@@ -38,7 +42,9 @@ def run_comparison(config):
     source = Path("data/raw/datasets.csv")
     df = read_dataset(source)
     parts = split_customers(df)
-    prior = json.loads(Path("evidence/tp02/first_model.json").read_text(encoding="utf-8"))
+    prior = json.loads(
+        Path("evidence/tp02/first_model.json").read_text(encoding="utf-8")
+    )
     if hashlib.sha256(source.read_bytes()).hexdigest() != prior["source_sha256"]:
         raise ValueError("Input hash changed since milestone 1.")
     for name, part in zip(["train", "validation", "test"], parts):
@@ -60,12 +66,14 @@ def run_comparison(config):
         start = perf_counter()
         candidate.fit(X_train, y_train)
         fit_seconds = perf_counter() - start
-        results.append({
-            "model": name,
-            "parameters": classifier.get_params(),
-            "fit_seconds": fit_seconds,
-            **evaluate_model(candidate, X_valid, y_valid, config["threshold"]),
-        })
+        results.append(
+            {
+                "model": name,
+                "parameters": classifier.get_params(),
+                "fit_seconds": fit_seconds,
+                **evaluate_model(candidate, X_valid, y_valid, config["threshold"]),
+            }
+        )
         fitted[name] = candidate
     learned = [row for row in results if row["model"] != "baseline"]
     winner = max(learned, key=lambda row: row["average_precision"])
@@ -94,19 +102,26 @@ def main():
     report, selected_pipeline = run_comparison(config)
     folder = Path("evidence/tp02")
     folder.mkdir(parents=True, exist_ok=True)
-    (folder / "comparison.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
-    table = pd.DataFrame(report["validation_results"]).drop(columns=["parameters", "confusion_matrix"])
+    (folder / "comparison.json").write_text(
+        json.dumps(report, indent=2), encoding="utf-8"
+    )
+    table = pd.DataFrame(report["validation_results"]).drop(
+        columns=["parameters", "confusion_matrix"]
+    )
     table.to_csv(folder / "comparison.csv", index=False)
     print(table.to_string(index=False))
     print("Selected:", report["selected_model"])
     (folder / "selection.md").write_text(
         f"# Validation selection\n\nSelected: {report['selected_model']}.\n\n"
-        + config["selection_reason"] + "\n\n" + report["selection_note"]
+        + config["selection_reason"]
+        + "\n\n"
+        + report["selection_note"]
         + "\n\nConfigurations and threshold were declared before this comparison. Timings describe this machine only. "
         + "These candidates all use the same six features and split; the earlier two-feature model is not part of this fair comparison.\n",
         encoding="utf-8",
     )
     from telco_churn.artifacts import save_and_check
+
     save_and_check(selected_pipeline, report)
 
 

@@ -1,0 +1,76 @@
+{
+  "run_id": "636d146f9a2a48e89e68f88886cc8ad4",
+  "status": "FINISHED",
+  "params": {
+    "model_type": "RandomForestClassifier",
+    "split_seed": "42",
+    "threshold": "0.5",
+    "bootstrap": "True",
+    "ccp_alpha": "0.0",
+    "class_weight": "None",
+    "criterion": "gini",
+    "max_depth": "8",
+    "max_features": "sqrt",
+    "max_leaf_nodes": "None",
+    "max_samples": "None",
+    "min_impurity_decrease": "0.0",
+    "min_samples_leaf": "5",
+    "min_samples_split": "2",
+    "min_weight_fraction_leaf": "0.0",
+    "monotonic_cst": "None",
+    "n_estimators": "100",
+    "n_jobs": "1",
+    "oob_score": "False",
+    "random_state": "42",
+    "verbose": "0",
+    "warm_start": "False"
+  },
+  "metrics": {
+    "val_average_precision": 0.6690920439341679,
+    "val_precision": 0.6738351254480287,
+    "val_recall": 0.5026737967914439,
+    "val_f1": 0.5758039816232772,
+    "val_accuracy": 0.8034066713981547,
+    "fit_seconds": 0.3196779999998398
+  },
+  "tags": {
+    "mlflow.user": "tasni",
+    "mlflow.source.name": "C:\\Users\\tasni\\Documents\\mlopstp\\telco-churn\\src\\telco_churn\\tracked_training.py",
+    "mlflow.source.type": "LOCAL",
+    "mlflow.source.git.commit": "ad309e89577eb8863db1bacc3403c140190b3c52",
+    "mlflow.source.git.branch": "feat/tp03-mlflow",
+    "mlflow.source.git.repoURL": "https://github.com/tasnimebj/telco-churn.git",
+    "mlflow.runName": "random_forest",
+    "git_commit": "ad309e89577eb8863db1bacc3403c140190b3c52",
+    "git_dirty": "false",
+    "data_sha256": "62ca518b1ebbcd4c832c18c1a21629b03abe9033fef66fe2e38d8d030658a20c"
+  },
+  "dataset_inputs": [
+    {
+      "name": "telco_train",
+      "digest": "6834438a",
+      "schema": "{\"mlflow_colspec\": [{\"type\": \"long\", \"name\": \"tenure\", \"required\": true}, {\"type\": \"double\", \"name\": \"MonthlyCharges\", \"required\": true}, {\"type\": \"string\", \"name\": \"TotalCharges\", \"required\": true}, {\"type\": \"string\", \"name\": \"Contract\", \"required\": true}, {\"type\": \"string\", \"name\": \"InternetService\", \"required\": true}, {\"type\": \"string\", \"name\": \"PaymentMethod\", \"required\": true}, {\"type\": \"string\", \"name\": \"Churn\", \"required\": true}]}",
+      "tags": [
+        {
+          "key": "mlflow.data.context",
+          "value": "training"
+        }
+      ]
+    },
+    {
+      "name": "telco_validation",
+      "digest": "4fb2e5e6",
+      "schema": "{\"mlflow_colspec\": [{\"type\": \"long\", \"name\": \"tenure\", \"required\": true}, {\"type\": \"double\", \"name\": \"MonthlyCharges\", \"required\": true}, {\"type\": \"string\", \"name\": \"TotalCharges\", \"required\": true}, {\"type\": \"string\", \"name\": \"Contract\", \"required\": true}, {\"type\": \"string\", \"name\": \"InternetService\", \"required\": true}, {\"type\": \"string\", \"name\": \"PaymentMethod\", \"required\": true}, {\"type\": \"string\", \"name\": \"Churn\", \"required\": true}]}",
+      "tags": [
+        {
+          "key": "mlflow.data.context",
+          "value": "validation"
+        }
+      ]
+    }
+  ],
+  "artifact_files": [
+    "confusion_matrix.json",
+    "provenance.json"
+  ]
+}

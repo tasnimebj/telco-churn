@@ -11,7 +11,20 @@ wheels/
 
 # Original data and generated outputs stay local.
 data/
-reports/
+reports/*
+!reports/tp03_summary.md
+!reports/tp04_summary.md
+!reports/tp05_summary.md
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+mlflow.db
+mlflow.db-*
+mlartifacts/
+mlruns/
 # Keep only the selected TP02 submission artifact and its metadata.
 models/*
 !models/selected_pipeline.joblib

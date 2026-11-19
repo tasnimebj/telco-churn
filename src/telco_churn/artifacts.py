@@ -30,10 +30,14 @@ def save_and_check(pipeline, report):
     medians_before = imputer.statistics_.copy()
     means_before = scaler.mean_.copy()
     scales_before = scaler.scale_.copy()
-    np.testing.assert_allclose(medians_before, X_train[NUMERIC_FEATURES].median().to_numpy())
+    np.testing.assert_allclose(
+        medians_before, X_train[NUMERIC_FEATURES].median().to_numpy()
+    )
     filled_train = imputer.transform(X_train[NUMERIC_FEATURES])
     np.testing.assert_allclose(means_before, filled_train.mean(axis=0))
-    expected_scores = pipeline.predict_proba(X_batch)[:, list(pipeline.classes_).index(1)]
+    expected_scores = pipeline.predict_proba(X_batch)[
+        :, list(pipeline.classes_).index(1)
+    ]
     threshold = report["configuration"]["threshold"]
     expected_predictions = (expected_scores >= threshold).astype(int)
 
@@ -64,16 +68,25 @@ def save_and_check(pipeline, report):
     artifact = models / "selected_pipeline.joblib"
     joblib.dump(pipeline, artifact)
     identity_paths = list(Path("src/telco_churn").glob("*.py")) + [
-        Path("configs/train.json"), Path("pyproject.toml"), Path("uv.lock"), Path(".python-version")
+        Path("configs/train.json"),
+        Path("pyproject.toml"),
+        Path("uv.lock"),
+        Path(".python-version"),
     ]
     metadata = {
         **report,
-        "environment": {"python": sys.version, "platform": platform.platform(), **{
-            package: version(package) for package in ["scikit-learn", "pandas", "numpy", "scipy", "joblib"]
-        }},
+        "environment": {
+            "python": sys.version,
+            "platform": platform.platform(),
+            **{
+                package: version(package)
+                for package in ["scikit-learn", "pandas", "numpy", "scipy", "joblib"]
+            },
+        },
         "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
         "code_and_environment_file_hashes": {
-            path.as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in identity_paths
+            path.as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in identity_paths
         },
         "preprocessing": {
             "boundary_rules": "Call prepare_features at training and inference; see references/tp02_pipeline.md.",
@@ -87,17 +100,29 @@ def save_and_check(pipeline, report):
         },
         "training_scope": "Selected candidate remains fitted on training customers only; no train+validation refit.",
     }
-    (models / "metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    (models / "metadata.json").write_text(
+        json.dumps(metadata, indent=2), encoding="utf-8"
+    )
     # A feature-only batch: no target or customer IDs are required by inference.
     batch_path = evidence / "inference_batch.json"
     batch.to_json(batch_path, orient="records", indent=2)
     output = evidence / "reloaded_predictions.json"
-    subprocess.run([
-        sys.executable, "-m", "telco_churn.prediction",
-        "--input", str(batch_path), "--output", str(output),
-    ], check=True)
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "telco_churn.prediction",
+            "--input",
+            str(batch_path),
+            "--output",
+            str(output),
+        ],
+        check=True,
+    )
     actual = json.loads(output.read_text(encoding="utf-8"))
-    np.testing.assert_allclose(actual["positive_probabilities"], expected_scores, rtol=0, atol=1e-12)
+    np.testing.assert_allclose(
+        actual["positive_probabilities"], expected_scores, rtol=0, atol=1e-12
+    )
     np.testing.assert_array_equal(actual["predictions"], expected_predictions)
     checks = {
         "customer_allocations_match_milestone_1_and_are_disjoint": True,
@@ -113,7 +138,11 @@ def save_and_check(pipeline, report):
         "test_evaluated": False,
         "artifact_sha256": metadata["artifact_sha256"],
     }
-    (evidence / "reliability_checks.json").write_text(json.dumps(checks, indent=2), encoding="utf-8")
+    (evidence / "reliability_checks.json").write_text(
+        json.dumps(checks, indent=2), encoding="utf-8"
+    )
     # Track metadata separately from the ignored binary model directory.
-    (evidence / "artifact_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    (evidence / "artifact_metadata.json").write_text(
+        json.dumps(metadata, indent=2), encoding="utf-8"
+    )
     print("Artifact saved; fresh-process reload and reliability checks passed.")

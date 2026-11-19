@@ -1,0 +1,11 @@
+{
+  "same_project_root_and_storage": true,
+  "runs_persisted": true,
+  "registered_version": "1",
+  "alias": "candidate",
+  "alias_persisted": true,
+  "fresh_process_predictions_identical": true,
+  "database": "mlflow.db",
+  "artifacts": "mlartifacts/",
+  "storage_deleted_or_renamed": false
+}
