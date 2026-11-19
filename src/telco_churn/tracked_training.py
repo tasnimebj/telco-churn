@@ -2,6 +2,8 @@
 import hashlib
 import json
 import subprocess
+import sys
+from importlib.metadata import version
 from pathlib import Path
 from time import perf_counter
 
@@ -26,6 +28,7 @@ def git(*args):
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8")
     mlflow.set_tracking_uri(URI)
     experiment = mlflow.set_experiment("telco-churn-tp03")
     config = json.loads(Path("configs/train.json").read_text())
@@ -73,7 +76,10 @@ def main():
             mlflow.log_metrics({**logged_metrics, "fit_seconds": elapsed})
             mlflow.log_dict({"matrix": metrics["confusion_matrix"], "labels": [0, 1], "rows": "actual", "columns": "predicted"}, "confusion_matrix.json")
             mlflow.log_dict(provenance, "provenance.json")
-            info = mlflow.sklearn.log_model(pipeline, name="churn_pipeline", input_example=X_train.head(3), serialization_format="cloudpickle")
+            requirements = [f"{package}=={version(package)}" for package in
+                            ["mlflow", "scikit-learn", "numpy", "scipy", "pandas", "joblib", "cloudpickle"]]
+            info = mlflow.sklearn.log_model(pipeline, name="churn_pipeline", input_example=X_train.head(3),
+                                            serialization_format="cloudpickle", pip_requirements=requirements)
             row = {"candidate": name, "run_id": run.info.run_id, "model_uri": info.model_uri,
                    "fit_seconds": elapsed, **logged_metrics}
             rows.append(row)

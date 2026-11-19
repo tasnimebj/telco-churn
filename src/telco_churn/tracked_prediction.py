@@ -1,6 +1,7 @@
 """Inference-only fresh-process recovery through the MLflow candidate alias."""
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import mlflow
@@ -12,6 +13,7 @@ from telco_churn.pipeline import prepare_features
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", default="evidence/tp03/reload_check.json")
     args = parser.parse_args()
